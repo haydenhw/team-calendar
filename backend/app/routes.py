@@ -61,11 +61,21 @@ def sink_modify(sink_id):
             'message': "Could not find sink with ID " + str(sink_id) + "."
         }), 404
 
-    if request.json.get('increment') == True: 
+    # Check to make sure increment and decrement do not both exist
+
+    if 'increment' in request.json and 'decrement' in request.json:
+        return jsonify({
+            'success': False,
+            'message': "Cannot increment and decrement at the same time"
+        }), 400
+
+    if 'increment' in request.json: 
         print("Increment is true!")
+        
         if modify_this_sink.slots < modify_this_sink.max_slots:
             modify_this_sink.slots += 1
             commit_to_db = True
+        
         else: 
             message = "Slots already full."
             return jsonify({
@@ -73,11 +83,14 @@ def sink_modify(sink_id):
                 'message': message
             }), 400
 
-    elif request.json.get('decrement') == True: 
+    elif 'decrement' in request.json: 
+
         print("Decrement is true!")
+        
         if modify_this_sink.slots > 0:
             modify_this_sink.slots -= 1
             commit_to_db = True
+        
         else: 
             message = "Slots empty, cannot decrement."
             return jsonify({
