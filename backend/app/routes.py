@@ -47,6 +47,7 @@ def sink_modify(sink_id):
     # Get ID from post data from request
 
     disabled_setting = request.json.get('disabled')
+<<<<<<< Updated upstream
     print(disabled_setting)
     # # Find Sink in table with this ID
     modify_this_sink = Sink.query.filter(Sink.id==sink_id).first()
@@ -54,6 +55,14 @@ def sink_modify(sink_id):
     # # If sink with this ID exists..
     # # get the disabled attribute
     if modify_this_sink:
+=======
+    
+    # # Find Sink in table with this ID 
+    modify_this_sink = Sink.query.filter(Sink.id==sink_id).first()
+
+    # # If sink with this ID exists, get the disabled attribute 
+    if modify_this_sink: 
+>>>>>>> Stashed changes
         modify_this_sink.disabled = disabled_setting
         db.session.add(modify_this_sink)
 
@@ -65,6 +74,7 @@ def sink_modify(sink_id):
 
     db.session.commit()
 
+<<<<<<< Updated upstream
     return jsonify(serialize_sink(modify_this_sink))
 
 
@@ -91,5 +101,21 @@ def sink_create():
 
     db.session.add(new_sink)
     db.session.commit()
+=======
+    # Make dictionary of modified sink's values are return that
+    return_data = {
+        'id': modify_this_sink.id,
+        'locationName': modify_this_sink.name,
+        'coordinates': {
+            'lat': modify_this_sink.lat,
+            'long': modify_this_sink.long,
+        },
+        'slots': modify_this_sink.slots,
+        'price_per_hour': modify_this_sink.price_per_hour,
+        'disabled': modify_this_sink.disabled_setting
+    }
+
+    return jsonify(return_data)
+>>>>>>> Stashed changes
 
     return serialize_sink(new_sink), 200
