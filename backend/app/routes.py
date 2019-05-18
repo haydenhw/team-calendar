@@ -70,8 +70,15 @@ def sink_list():
     return_data = []
 
     try:
-        current_lat = float(request.args.get('lat'))
-        current_lng = float(request.args.get('lng'))
+        if request.args.get('lat'):
+            current_lat = float(request.args.get('lat'))
+        else:
+            current_lat = None
+
+        if request.args.get('lng'):
+            current_lng = float(request.args.get('lng'))
+        else:
+            current_lng = None
     except ValueError:
         return jsonify({'success': False, 'message': 'Must provide valid floats for lat/lng'}), 400
 
@@ -86,8 +93,15 @@ def sink_get(sink_id):
     sink = Sink.query.get(sink_id)
 
     try:
-        current_lat = float(request.args.get('lat'))
-        current_lng = float(request.args.get('lng'))
+        if request.args.get('lat'):
+            current_lat = float(request.args.get('lat'))
+        else:
+            current_lat = None
+
+        if request.args.get('lng'):
+            current_lng = float(request.args.get('lng'))
+        else:
+            current_lng = None
     except ValueError:
         return jsonify({'success': False, 'message': 'Must provide valid floats for lat/lng'}), 400
 
