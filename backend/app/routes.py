@@ -1,7 +1,7 @@
 from flask import render_template, jsonify, request
 
 from app import app, db
-from app.models import User, Sink
+from app.models import User, Sink, Event
 
 @app.route('/')
 def index():
@@ -25,6 +25,27 @@ def serialize_sink(sink):
         'price_per_hour': sink.price_per_hour,
         'disabled': sink.disabled
     }
+
+def serialize_event(event):
+    return {
+        'id': event.id,
+        'user_id': event.user_id,
+        'name': event.name,
+        'start_time': event.start_time,
+        'end_time': event.end_time,
+        'lat': event.lat, 
+        'lng': event.lng
+    }
+
+@app.route('/rest/v1/events/<int:user_id>', methods=['GET'])
+# Queries all events that have a relationship with the specified user_id
+def get_events_with_user_id(user_id):
+    user_events = []
+    for user_event in Event.query.filter(Event.user_id==user_id).all():
+        # Need serialize_event method
+        user_events.append(serialize_event(user_event))
+
+    return jsonify(user_events)
 
 
 @app.route('/rest/v1/sink', methods=['GET'])

@@ -1,7 +1,10 @@
 from app import db
-
+# from datetime import datetime
 
 class User(db.Model):
+
+    __tablename__ = 'user'
+
     id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     first_name = db.Column(db.String(2048))
     last_name = db.Column(db.String(2048))
@@ -13,6 +16,9 @@ class User(db.Model):
 
 
 class Sink(db.Model):
+
+    __tablename__ = 'sink'
+
     id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     name = db.Column(db.String(2048), nullable=False)
     lat = db.Column(db.Float, nullable=False, index=True)
@@ -22,3 +28,23 @@ class Sink(db.Model):
     disabled = db.Column(db.Boolean, index=True)
     price_per_hour = db.Column(db.Float)
 
+    def __repr__(self):
+        return f'<Sink name {self.name} has {self.slots} slots>'
+
+class Event(db.Model):
+
+    __tablename__ = 'event'
+
+    id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    user_id = db.Column(db.Integer,
+        db.ForeignKey('user.id'), 
+        nullable=False)
+    user = db.relationship('User', backref='user')
+    name = db.Column(db.String(2048), nullable=False)
+    start_time = db.Column(db.String(2048), nullable=False)
+    end_time = db.Column(db.String(2048), nullable=False)
+    lat = db.Column(db.Float, nullable=False, index=True)
+    lng = db.Column(db.Float, nullable=False, index=True)
+
+    def __repr__(self):
+        return f'<Event {self.name}, User {self.user.first_name}>'

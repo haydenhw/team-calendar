@@ -2,7 +2,7 @@ import os
 import json
 
 from app import app, db
-from app.models import User, Sink
+from app.models import User, Sink, Event
 
 SINK_LOCATIONS = json.loads("""
 [
@@ -106,6 +106,7 @@ if __name__ == '__main__':
 
     default = User(email="solaruser@gmail.com", first_name="Solar", last_name="User")
     db.session.add(default)
+    db.session.commit()
 
     for location in SINK_LOCATIONS:
         sink = Sink(
@@ -119,5 +120,13 @@ if __name__ == '__main__':
         )
         db.session.add(sink)
 
+    event1 = Event(name= "Event1", start_time = "starttime", end_time = "endtime", user_id = default.id, lat="37.803915", lng="-122.271021")
+    event2 = Event(name= "Event2", start_time = "starttime2", end_time = "endtime2", user_id = default.id, lat="37.803621", lng="-122.2706387")
+    event3 = Event(name= "Event3", start_time = "starttime3", end_time = "endtime3", user_id = default.id, lat="37.8037411", lng="-122.2834014")
+    
+    db.session.add(event1)
+    db.session.add(event2)
+    db.session.add(event3)
     db.session.commit()
+
     app.run(host='localhost', port=8080, debug=True)
