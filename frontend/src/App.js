@@ -1,7 +1,11 @@
 import React from 'react';
 import { BrowserRouter as Router, Route } from "react-router-dom";
 
+// views
 import Main from "./views/Main";
+import Signup from "./views/Signup";
+
+// layout components
 import Sidebar from "./components/Sidebar";
 import Navbar from "./components/Navbar";
 
@@ -28,6 +32,7 @@ const App = () => {
                     <Navbar />
                     <div style={styles.view}>
                         <Route exact path="/" component={Main} />
+                        <Route path="/signup" component={Signup} />
                         <Route path="/test" component={Test} />
                     </div>
                 </div>

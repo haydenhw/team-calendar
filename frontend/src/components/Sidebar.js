@@ -39,16 +39,22 @@ function PermanentDrawerLeft (props) {
                 <div className={classes.toolbar} />
                 <Divider />
                 <List>
-                    <ListItem button key={1} onClick={() => history.push('/')}>
+                    <ListItem button  onClick={() => history.push('/')}>
                         <ListItemIcon>
-                            <HomeIcon/>
+                            <HomeIcon />
                         </ListItemIcon>
                         <ListItemText primary="App" />
                     </ListItem>
-                    <ListItem button key={2} onClick={() => history.push('/test')} >
+                    <ListItem button  onClick={() => history.push('/signup')}>
                         <ListItemIcon>
-                            <BuildIcon/>
-                          </ListItemIcon>
+                            <HomeIcon />
+                        </ListItemIcon>
+                        <ListItemText primary="Signup" />
+                    </ListItem>
+                    <ListItem button  onClick={() => history.push('/test')} >
+                        <ListItemIcon>
+                            <BuildIcon />
+                        </ListItemIcon>
                         <ListItemText primary="Test" />
                     </ListItem>
                 </List>
