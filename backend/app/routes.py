@@ -3,6 +3,7 @@ from flask import render_template, jsonify, request
 from app import app, db
 from app.models import User, Sink
 
+
 @app.route('/')
 def index():
     return_data = []
@@ -30,7 +31,7 @@ def serialize_sink(sink):
 @app.route('/rest/v1/sink', methods=['GET'])
 def sink_list():
     return_data = []
-    for sink_object in Sink.query.filter(Sink.disabled==False).all():
+    for sink_object in Sink.query.filter(Sink.disabled == False).all():
         return_data.append(serialize_sink(sink_object))
 
     return jsonify(return_data)
@@ -51,8 +52,7 @@ def sink_modify(sink_id):
         If increment and decrement parameters exist as true, increments and decrements the slots quantity accordingly
         Returns new modified object
     """
-    modify_this_sink = Sink.query.filter(Sink.id==sink_id).first()
-
+    modify_this_sink = Sink.query.filter(Sink.id == sink_id).first()
     commit_to_db = False
 
     if not modify_this_sink:
@@ -69,29 +69,24 @@ def sink_modify(sink_id):
             'message': "Cannot increment and decrement at the same time"
         }), 400
 
-    if 'increment' in request.json: 
-        print("Increment is true!")
-        
+    if 'increment' in request.json:
         if modify_this_sink.slots < modify_this_sink.max_slots:
             modify_this_sink.slots += 1
             commit_to_db = True
-        
-        else: 
+        else:
             message = "Slots already full."
             return jsonify({
                 'success': False,
                 'message': message
             }), 400
 
-    elif 'decrement' in request.json: 
+    elif 'decrement' in request.json:
 
-        print("Decrement is true!")
-        
         if modify_this_sink.slots > 0:
             modify_this_sink.slots -= 1
             commit_to_db = True
-        
-        else: 
+
+        else:
             message = "Slots empty, cannot decrement."
             return jsonify({
                 'success': False,
@@ -103,7 +98,6 @@ def sink_modify(sink_id):
 
     # Check to see if disabled parameter exists, if it does then change it to disabled_setting
     if 'disabled' in request.json:
-        print("'Disabled' parameter exists!")
         modify_this_sink.disabled = disabled_setting
         commit_to_db = True
 
@@ -113,7 +107,6 @@ def sink_modify(sink_id):
 
     return jsonify(serialize_sink(modify_this_sink))
 
-# patch with increment, decrement, disabled
 
 @app.route('/rest/v1/sink', methods=['POST'])
 def sink_create():

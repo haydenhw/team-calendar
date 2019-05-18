@@ -22,3 +22,11 @@ class Sink(db.Model):
     disabled = db.Column(db.Boolean, index=True)
     price_per_hour = db.Column(db.Float)
 
+
+class Event(db.Model):
+    id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    name = db.Column(db.String(2048), nullable=False)
+    start_time = db.Column(db.String(2048), nullable=False, index=True)
+    end_time = db.Column(db.String(2048), nullable=False, index=True)
+    lat = db.Column(db.Float, nullable=False, index=True)
+    lng = db.Column(db.Float, nullable=False, index=True)
