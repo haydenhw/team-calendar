@@ -9,6 +9,6 @@ on Mac:
 otherwise check here
 https://yarnpkg.com/en/docs/install#mac-stable
 
-2.) Install dependencies and run start script from 'team-calendar/frontend'
+2.) cd into 'team-calendar/frontend' and run this command
 
  ``` yarn install && yarn start ```
