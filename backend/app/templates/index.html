@@ -1,12 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Welcome to Team Calendar</title>
-</head>
-<body>
-    {% for user in users %}
-        I have user {{ user }} in the database
-    {% endfor %}
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Places you can charge today!</title>
+  </head>
+  <body>
+    {% for user in users %} I have user {{ user }} in the database {% endfor %}
+
+    <!-- start with events, organize Work, Shopping, Warriors Game together -->
+    <!--  -->
+
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Roboto:300,400,500"
+    />
+
+    <script
+      src="https://unpkg.com/@material-ui/core/umd/material-ui.production.min.js"
+      crossorigin="anonymous"
+    ></script>
+  </body>
 </html>
