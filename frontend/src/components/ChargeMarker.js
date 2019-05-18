@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
-import drainMarkerImg from '../markers/charge-marker.png';
+import ChargeMarkerImg from '../markers/charge-marker.png';
 
-const DrainMarker = ({ text }) => <img src={drainMarkerImg}></img>;
+const ChargeMarker = ({ text }) => <img src={ChargeMarkerImg}></img>;
 
 class Marker extends Component {
   render() {
     const { location } = this.props;
+    console.log(location);
     return (
-          <DrainMarker 
+          <ChargeMarker 
             lat={location.lat}
             lng={location.lng}
           />
