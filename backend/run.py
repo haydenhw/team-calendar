@@ -92,6 +92,9 @@ if __name__ == '__main__':
             name=location["locationName"],
             lat=location["coordinates"]["lat"],
             long=location["coordinates"]["lng"],
+            disabled=False,
+            price_per_hour=0,
+            slots=1,
         )
         db.session.add(sink)
 

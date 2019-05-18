@@ -18,17 +18,19 @@ def index():
     return render_template('index.html', users=return_data), 200
 
 
-@app.route('/rest/v1/sink', methods = ['GET'])
+@app.route('/rest/v1/sink', methods=['GET'])
 def sink():
     return_data = []
-    for sink in Sink.query.all():
+    for sink_object in Sink.query.filter(Sink.disabled==False).all():
         return_data.append({
-            'id': sink.id,
-            'locationName': sink.name,
+            'id': sink_object.id,
+            'locationName': sink_object.name,
             'coordinates': {
-                'lat': sink.lat,
-                'long': sink.long,
-            }
+                'lat': sink_object.lat,
+                'long': sink_object.long,
+            },
+            'slots': sink_object.slots,
+            'price_per_hour': sink_object.price_per_hour,
         })
 
     return jsonify(return_data)
