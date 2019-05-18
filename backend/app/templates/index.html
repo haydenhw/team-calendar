@@ -5,6 +5,8 @@
     <title>Welcome to Team Calendar</title>
 </head>
 <body>
-    Static pages only for now, need to setup db
+    {% for user in users %}
+        I have user {{ user }} in the database
+    {% endfor %}
 </body>
 </html>

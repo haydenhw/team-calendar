@@ -1,16 +1,15 @@
 from flask import Flask, render_template
 
+from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
+
 from config import Config
 
 app = Flask(__name__)
 app.config.from_object(Config)
 
+db = SQLAlchemy(app)
+db.app = app
+db.init_app(app)
 
-@app.errorhandler(404)
-def not_found(error):
-    return render_template('404.html'), 404
-
-
-@app.route('/')
-def index():
-    return render_template('index.html'), 200
+from app import routes
