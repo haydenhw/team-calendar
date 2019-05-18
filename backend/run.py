@@ -91,10 +91,11 @@ if __name__ == '__main__':
         sink = Sink(
             name=location["locationName"],
             lat=location["coordinates"]["lat"],
-            long=location["coordinates"]["lng"],
+            lng=location["coordinates"]["lng"],
             disabled=False,
             price_per_hour=0,
             slots=1,
+            max_slots=1,
         )
         db.session.add(sink)
 

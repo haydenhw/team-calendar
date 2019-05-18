@@ -3,12 +3,6 @@ from flask import render_template, jsonify, request
 from app import app, db
 from app.models import User, Sink
 
-
-@app.errorhandler(404)
-def not_found(error):
-    return render_template('404.html'), 404
-
-
 @app.route('/')
 def index():
     return_data = []
@@ -27,6 +21,7 @@ def serialize_sink(sink):
             'lng': sink.lng,
         },
         'slots': sink.slots,
+        'max_slots': sink.max_slots,
         'price_per_hour': sink.price_per_hour,
         'disabled': sink.disabled
     }
@@ -43,7 +38,34 @@ def sink_list():
 
 @app.route('/rest/v1/sink/<int:sink_id>', methods=['PATCH'])
 def sink_modify(sink_id):
-    Sink.query.get(id=sink_id)
+    """ Queries database for Sink object with ID sink_id and changes the boolean in the disabled column
+        Returns new modified object
+    """
+
+    print(request.json)
+
+    # Get ID from post data from request
+
+    disabled_setting = request.json.get('disabled')
+    print(disabled_setting)
+    # # Find Sink in table with this ID
+    modify_this_sink = Sink.query.filter(Sink.id==sink_id).first()
+
+    # # If sink with this ID exists..
+    # # get the disabled attribute
+    if modify_this_sink:
+        modify_this_sink.disabled = disabled_setting
+        db.session.add(modify_this_sink)
+
+    else:
+        return jsonify({
+            'success': False,
+            'message': "Could not find sink with ID " + str(sink_id)
+        }), 404
+
+    db.session.commit()
+
+    return jsonify(serialize_sink(modify_this_sink))
 
 
 @app.route('/rest/v1/sink', methods=['POST'])
