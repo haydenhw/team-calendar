@@ -3,7 +3,8 @@
 
 ## Dev setup
 
-You'll need python3/pip3 setup on your instance
+You'll need python3/pip3 setup on your instance.
+Usually it's just brew install python3
 
 ```bash
 cd backend
@@ -18,3 +19,5 @@ To run the application:
 ```bash
 python run.py
 ```
+
+Then, go to localhost:8080 to get a dummy index page
