@@ -26,23 +26,22 @@ const styles = {
 
 function InfoCard(props) {
     console.log(props.bar);
-//   const { classes } = props;
+   const { classes } = props;
 //   const bull = <span className={classes.bullet}>•</span>;
 
   return (
-    // <Card className={props.locationName}>
-    <Card styles={styles.card}>
+    <Card className={classes.title}>
       <CardContent>
         {/* <Typography className={classes.title} color="textSecondary" gutterBottom>
           Word of the Day
         </Typography> */}
-        <Typography className={props.locationName} variant="h5" component="h2">
+        <Typography className={classes.title} variant="h5" component="h2">
           {/* be
           {bull}
           nev
           {bull}o{bull}
           lent */}
-          {props.locationName}
+          {"Bird"}
         </Typography>
         <Typography color="textSecondary">
           $5
@@ -64,11 +63,9 @@ function InfoCard(props) {
 //   classes: PropTypes.object.isRequired,
 // };
 
-function Parent(props){
-    return withStyles(styles)(<InfoCard foo={props.foo}/>);
-}
+// function Parent(props){
+//     return withStyles(styles)(<InfoCard foo={props.foo}/>);
+// }
 
-export default Parent;
-
-//withStyles(styles)(InfoCard);
+export default withStyles(styles)(InfoCard);
 

@@ -57,7 +57,7 @@ class SimpleMap extends Component {
           hoverDistance={100 / 2}
 
         >
-          <InfoCard foo="bar"></InfoCard>
+          <InfoCard></InfoCard>
           {/* <UserMarker lat={hackathonLocation.lat} lng={hackathonLocation.lng} /> */}
           <HoverMarker lat={hackathonLocation.lat} lng={hackathonLocation.lng} />
           
