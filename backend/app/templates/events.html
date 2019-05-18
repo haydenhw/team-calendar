@@ -14,17 +14,16 @@
   </head>
   <body>
     <img src="/static/logo.png" />
-    <p>{{ user.first_name }}'s Events</p>
-
-    <a href="http://localhost:3000/">Link to "NOW"</a>
+    <h3>{{ user.first_name }}'s Events</h3>
     <p>
       {% for event in events %}
     </p>
 
-    <div>
+    <div style="margin-left: auto; margin-right: auto">
       <div class="row">
         <div class="col s12 m6">
           <div class="card white">
+            <center>
             <div class="card-content black-text">
               <span class="card-title">{{ event.name }}</span>
               <p>
@@ -44,11 +43,14 @@
                   >See Charging Stations Near Me!</a
                 >
               </center>
+            </center>
             </div>
+            
           </div>
         </div>
       </div>
     </div>
+
     {% endfor %}
   </body>
 </html>
