@@ -16,7 +16,7 @@ class Sink(db.Model):
     id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     name = db.Column(db.String(2048), nullable=False)
     lat = db.Column(db.Float, nullable=False, index=True)
-    long = db.Column(db.Float, nullable=False, index=True)
+    lng = db.Column(db.Float, nullable=False, index=True)
     slots = db.Column(db.Integer, nullable=False)
     disabled = db.Column(db.Boolean, index=True)
     price_per_hour = db.Column(db.Float)
