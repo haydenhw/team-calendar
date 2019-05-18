@@ -3,16 +3,14 @@ import axios from 'axios';
 import GoogleMapReact from 'google-map-react';
 import locations from '../config/locations';
 
-// import UserMarker from '../components/UserMarker';
-// import ChargeMarker  from '../components/ChargeMarker';
-
+import HoverMarker from '../components/HoverMarker';
+import {K_CIRCLE_SIZE, K_STICK_SIZE} from '../components/HoverMarkerStyles';
 import userMarkerImg from '../markers/user-marker.png';
 import chargeMarkerImg from '../markers/charge-marker.png';
 
 const ChargeMarker = ({ text }) => <img src={chargeMarkerImg}></img>;
 const UserMarker = ({ text }) => <img src={userMarkerImg}></img>;
 
-const serverLocation = 'http://www.google.com';
 
 const hackathonLocation = { lat: 37.8039001, lng: -122.272983 };
 const testLocation = locations[0].coordinates;
@@ -53,11 +51,12 @@ class SimpleMap extends Component {
           bootstrapURLKeys={{ key: 'AIzaSyAvPFEDTIhHF19n9qSU9XOLQoUOlwJrAbE' }}
           defaultCenter={this.props.center}
           defaultZoom={this.props.zoom}
-          hoverDistance={30 / 2}
+          hoverDistance={100 / 2}
 
         >
-          <UserMarker lat={hackathonLocation.lat} lng={hackathonLocation.lng} />
-          {this.renderChargeMarkers()}
+          {/* <UserMarker lat={hackathonLocation.lat} lng={hackathonLocation.lng} /> */}
+          <HoverMarker lat={hackathonLocation.lat} lng={hackathonLocation.lng} />
+          {/* {this.renderChargeMarkers()} */}
         </GoogleMapReact>
       </div>
     );
