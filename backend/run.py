@@ -14,7 +14,10 @@ def convert_time_to_utc(year, month, day, hour, minute):
     pacific = timezone("US/Pacific")
     timezone_time = pacific.localize(naive_time)
     utc_time = timezone_time.astimezone(utc)
-    return utc_time.isoformat()
+
+    # TODO: Switch over to UTC timestamp 
+
+    return naive_time.isoformat()
 
 
 SINK_LOCATIONS = json.loads("""

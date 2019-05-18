@@ -1,5 +1,6 @@
 from flask import render_template, jsonify, request
 import googlemaps
+from dateutil.parser import parse
 
 from app import app, db
 from app.models import User, Sink, Event
@@ -18,7 +19,17 @@ def index():
 def get_user_events(user_id):
     user = User.query.filter(User.id==user_id).first()
     events = Event.query.filter(Event.user_id==user_id).all()
-    return render_template('events.html', events=events, user=user)
+
+    return_data = []
+    for event in events:
+        return_data.append({
+            'name': event.name,
+            'description': event.description,
+            'start_time': parse(event.start_time).strftime('%A %B %d, %Y %I:%M %p'),
+            'end_time': parse(event.end_time).strftime('%A %B %d, %Y %I:%M %p')
+        })
+
+    return render_template('events.html', events=return_data, user=user)
 
 
 def serialize_sink(sink, current_lat=None, current_lng=None):

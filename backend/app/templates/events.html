@@ -30,13 +30,20 @@
               <p>
                 {{ event.description }}
               </p>
+              <p></p>
               <div class="card-data">
-                Time: {{ event.start_time }} - {{ event.end_time }}
+                Start Time:
+                <p id="start-time-{{ event.id }}">{{ event.start_time }}</p>
+                End Time:
+                <p id="end-time-{{ event.id }}">{{ event.end_time }}</p>
               </div>
             </div>
             <div class="card-action">
-              <a href="#">This is a link</a>
-              <a href="#">This is a link</a>
+              <center>
+                <a href="http://localhost:3000/"
+                  >See Charging Stations Near Me!</a
+                >
+              </center>
             </div>
           </div>
         </div>
