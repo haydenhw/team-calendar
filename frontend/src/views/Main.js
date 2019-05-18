@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 import GoogleMapReact from 'google-map-react';
-import locations from '../config/locations'; 
+import locations from '../config/locations';
 
 // import UserMarker from '../components/UserMarker';
 // import ChargeMarker  from '../components/ChargeMarker';
@@ -20,21 +21,30 @@ const testLocation2 = locations[1].coordinates;
 class SimpleMap extends Component {
   static defaultProps = {
     center: hackathonLocation,
-    zoom: 14, 
+    zoom: 14,
   };
 
-  renderChargeMarkers() {
+  componentDidMount () {
+    const fetchData = async () => {
+      const url = 'http://localhost:8080/rest/v1/sink';
+      const { data } = await axios(url);
+      console.log(data);
+    }
+    fetchData();
+  }
+
+  renderChargeMarkers () {
     var chargeMarkers = locations.map((location, i) => {
-      
+
       return (
-          <ChargeMarker key={i} lat={location.coordinates.lat} lng={location.coordinates.lng} />
+        <ChargeMarker key={i} lat={location.coordinates.lat} lng={location.coordinates.lng} />
       );
     });
 
     return chargeMarkers;
   }
- 
-  render() {
+
+  render () {
     return (
       // Important! Always set the container height explicitly
       <div style={{ height: '100vh', width: '100%' }}>
@@ -43,13 +53,15 @@ class SimpleMap extends Component {
           bootstrapURLKeys={{ key: 'AIzaSyAvPFEDTIhHF19n9qSU9XOLQoUOlwJrAbE' }}
           defaultCenter={this.props.center}
           defaultZoom={this.props.zoom}
+          hoverDistance={30 / 2}
+
         >
           <UserMarker lat={hackathonLocation.lat} lng={hackathonLocation.lng} />
-          { this.renderChargeMarkers() }
+          {this.renderChargeMarkers()}
         </GoogleMapReact>
       </div>
     );
   }
 }
- 
+
 export default SimpleMap;
