@@ -9,7 +9,7 @@ SINK_LOCATIONS = json.loads("""
   {
     "coordinates": {
       "lat": 37.811161, 
-      "long": -122.262722
+      "lng": -122.262722
     }, 
     "locationName": "Bird", 
     "price_per_hour": 1.90, 
@@ -114,8 +114,8 @@ if __name__ == '__main__':
             lng=location["coordinates"]["lng"],
             disabled=False,
             price_per_hour=0,
-            slots=1,
-            max_slots=1,
+            slots=location["slots"],
+            max_slots=location["slots"],
         )
         db.session.add(sink)
 
