@@ -36,6 +36,15 @@ def sink_list():
     return jsonify(return_data)
 
 
+@app.route('/rest/v1/sink/<int:sink_id>', methods=['GET'])
+def sink_get(sink_id):
+    sink = Sink.query.get(sink_id)
+    if sink:
+        return jsonify(serialize_sink(sink))
+    else:
+        return jsonify({'success': False, 'message': f'Sink with id `{sink_id}` does not exist'}), 404
+
+
 @app.route('/rest/v1/sink/<int:sink_id>', methods=['PATCH'])
 def sink_modify(sink_id):
     """ Queries database for Sink object with ID sink_id and changes the boolean in the disabled column
@@ -72,11 +81,13 @@ def sink_modify(sink_id):
 def sink_create():
     try:
         new_sink = Sink(
-            name=request.json['name'],
+            name=request.json['locationName'],
             lat=request.json['coordinates']['lat'],
             lng=request.json['coordinates']['lng'],
             slots=request.json['slots'],
-            price_per_hour=request.json['price'],
+            max_slots=request.json.get('max_slots', request.json['slots']),
+            price_per_hour=request.json['price_per_hour'],
+            disabled=request.json.get('disabled', False),
         )
     except KeyError as e:
         missing_key = e.args[0]
@@ -92,4 +103,4 @@ def sink_create():
     db.session.add(new_sink)
     db.session.commit()
 
-    return serialize_sink(new_sink), 200
+    return jsonify(serialize_sink(new_sink)), 200
