@@ -220,7 +220,7 @@ if __name__ == '__main__':
             lat=location["coordinates"]["lat"],
             lng=location["coordinates"]["lng"],
             disabled=False,
-            price_per_hour=0,
+            price_per_hour=locations["price_per_hour"],
             slots=location["slots"],
             max_slots=location["slots"],
         )
