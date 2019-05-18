@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 
 // views
 import Main from "./views/Main";
-import Signup from "./views/Signup";
+import SignUp from "./views/Signup";
 
 const styles = {
     appWrapper: {
@@ -21,8 +21,8 @@ const App = () => {
         <Router>
             <div style={styles.appWrapper}>
                 <div style={styles.view}>
-                    <Route exact path="/" component={Main} />
-                    <Route path="/signup" component={Signup} />
+                    <Route path="/" component={SignUp} />
+                    <Route exact path="/app" component={Main} />
                     <Route path="/test" component={Test} />
                 </div>
             </div>

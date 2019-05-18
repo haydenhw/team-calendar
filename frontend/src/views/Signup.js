@@ -13,6 +13,9 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
 
+import TextInput from '../components/Input';
+
+
 const styles = theme => ({
   main: {
     width: 'auto',
@@ -45,53 +48,65 @@ const styles = theme => ({
   },
 });
 
-function SignUp(props) {
-  const { classes } = props;
+class SignUp extends React.Component {
+  state = {
+    firstName:"",
+    lastName: "",
+    email: "",
+    password: "",
+  };
 
-  return (
-    <main className={classes.main}>
-      <CssBaseline />
-      <Paper className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <PersonIcon/>
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Sign Up
-        </Typography>
-        <form className={classes.form}>
-          <FormControl margin="normal" required fullWidth>
-            <InputLabel htmlFor="fristname">First Name</InputLabel>
-            <Input id="fristname" name="fristname" autoComplete="fristname" autoFocus />
-          </FormControl>
-          <FormControl margin="normal" required fullWidth>
-            <InputLabel htmlFor="email">Last Name</InputLabel>
-            <Input id="email" name="email" autoComplete="email" autoFocus />
-          </FormControl>
-          <FormControl margin="normal" required fullWidth>
-            <InputLabel htmlFor="email">Email Address</InputLabel>
-            <Input id="email" name="email" autoComplete="email" autoFocus />
-          </FormControl>
-          <FormControl margin="normal" required fullWidth>
-            <InputLabel htmlFor="password">Password</InputLabel>
-            <Input name="password" type="password" id="password" autoComplete="current-password" />
-          </FormControl>
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-          />
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-          >
-            Sign in
-          </Button>
-        </form>
-      </Paper>
-    </main>
-  );
+  render () {
+    const { classes } = this.props;
+
+    return (
+      <main className={classes.main}>
+        <CssBaseline />
+        <Paper className={classes.paper}>
+          <Avatar className={classes.avatar}>
+            <PersonIcon/>
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            Sign Up
+          </Typography>
+          <form onSubmit={ () => console.log('hello') } className={classes.form}>
+          <TextInput label="hello" handleChange={() => { console.log("hello")} }  />
+            <FormControl margin="normal"  fullWidth>
+              <InputLabel htmlFor="fristname">First Name</InputLabel>
+              <Input 
+               onChange={ event => console.log(event.target.value)}
+               id="fristname" name="fristname" autoComplete="firstname" autoFocus />
+            </FormControl>
+            <FormControl margin="normal"  fullWidth>
+              <InputLabel htmlFor="lastname">Last Name</InputLabel>
+              <Input id="lastname" name="lastname" autoComplete="lastname" autoFocus />
+            </FormControl>
+            <FormControl margin="normal"  fullWidth>
+              <InputLabel htmlFor="email">Email Address</InputLabel>
+              <Input id="email" name="email" autoComplete="email" autoFocus />
+            </FormControl>
+            <FormControl margin="normal"  fullWidth>
+              <InputLabel htmlFor="password">Password</InputLabel>
+              <Input name="password" type="password" id="password" autoComplete="current-password" />
+            </FormControl>
+            <FormControlLabel
+              control={<Checkbox value="remember" color="primary" />}
+              label="Remember me"
+            />
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+            >
+              Sign in
+            </Button>
+          </form>
+        </Paper>
+      </main>
+    );
+  }
 }
 
 SignUp.propTypes = {
