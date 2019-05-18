@@ -7,74 +7,94 @@ from app.models import User, Sink
 SINK_LOCATIONS = json.loads("""
 [
   {
-    "locationName": "Bird",
     "coordinates": {
-      "lat": 37.811161,
-      "lng": -122.262722
-    }
+      "lat": 37.811161, 
+      "long": -122.262722
+    }, 
+    "locationName": "Bird", 
+    "price_per_hour": 1.90, 
+    "slots": 2
   },
   {
-    "locationName": "Lime",
     "coordinates": {
       "lat": 37.80908,
       "lng": -122.265588
-    }
+    }, 
+    "locationName": "Lime", 
+    "price_per_hour": 2.10, 
+    "slots": 3
   },
   {
-    "locationName": "Scoot",
     "coordinates": {
       "lat": 37.811894,
       "lng": -122.269
-    }
+    }, 
+    "locationName": "Scoot",
+    "price_per_hour": 3.30, 
+    "slots": 4
   },
   {
-    "locationName": "Nisan",
     "coordinates": {
       "lat": 37.810148,
       "lng": -122.273045
-    }
+    }, 
+    "locationName": "Nisan",
+    "price_per_hour": 5.0, 
+    "slots": 1
   },
   {
-    "locationName": "Nisan",
     "coordinates": {
       "lat": 37.808029,
       "lng": -122.272251
-    }
+    }, 
+    "locationName": "Mitsubishi",
+    "price_per_hour": 4.10, 
+    "slots": 1
   },
   {
-    "locationName": "Bird",
     "coordinates": {
       "lat": 37.808555,
       "lng": -122.269858
-    }
+    }, 
+    "locationName": "Bird", 
+    "price_per_hour": 1.90, 
+    "slots": 1
   },
   {
-    "locationName": "Lime",
     "coordinates": {
       "lat": 37.806716,
       "lng": -122.268699
-    }
+    }, 
+    "locationName": "Lime", 
+    "price_per_hour": 2.10, 
+    "slots": 1
   },
   {
-    "locationName": "Scoot",
     "coordinates": {
       "lat": 37.80597,
       "lng": -122.271875
-    }
+    }, 
+    "locationName": "Scoot", 
+    "price_per_hour": 3.30, 
+    "slots": 1
   },
   {
-    "locationName": "Nisan",
     "coordinates": {
       "lat": 37.806521,
       "lng": -122.265051
-    }
+    }, 
+    "locationName": "Mitsubishi", 
+    "price_per_hour": 4.10, 
+    "slots": 1
   },
   {
-    "locationName": "Nisan",
     "coordinates": {
       "lat": 37.804893,
       "lng": -122.266853
-    }
+    }, 
+    "locationName": "Bird", 
+    "price_per_hour": 1.90, 
+    "slots": 3
   }
 ]
 """)
@@ -92,9 +112,6 @@ if __name__ == '__main__':
             name=location["locationName"],
             lat=location["coordinates"]["lat"],
             long=location["coordinates"]["lng"],
-            disabled=False,
-            price_per_hour=0,
-            slots=1,
         )
         db.session.add(sink)
 
