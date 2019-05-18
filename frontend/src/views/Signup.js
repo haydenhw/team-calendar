@@ -56,8 +56,13 @@ class SignUp extends React.Component {
     password: "",
   };
 
+  handleChange = stateKey => event => {
+    this.setState({ [stateKey]: event.target.value }, () => console.log(this.state) );
+  };
+
   render () {
     const { classes } = this.props;
+
 
     return (
       <main className={classes.main}>
@@ -70,25 +75,10 @@ class SignUp extends React.Component {
             Sign Up
           </Typography>
           <form onSubmit={ () => console.log('hello') } className={classes.form}>
-          <TextInput label="hello" handleChange={() => { console.log("hello")} }  />
-            <FormControl margin="normal"  fullWidth>
-              <InputLabel htmlFor="fristname">First Name</InputLabel>
-              <Input 
-               onChange={ event => console.log(event.target.value)}
-               id="fristname" name="fristname" autoComplete="firstname" autoFocus />
-            </FormControl>
-            <FormControl margin="normal"  fullWidth>
-              <InputLabel htmlFor="lastname">Last Name</InputLabel>
-              <Input id="lastname" name="lastname" autoComplete="lastname" autoFocus />
-            </FormControl>
-            <FormControl margin="normal"  fullWidth>
-              <InputLabel htmlFor="email">Email Address</InputLabel>
-              <Input id="email" name="email" autoComplete="email" autoFocus />
-            </FormControl>
-            <FormControl margin="normal"  fullWidth>
-              <InputLabel htmlFor="password">Password</InputLabel>
-              <Input name="password" type="password" id="password" autoComplete="current-password" />
-            </FormControl>
+            <TextInput label="First Name" handleChange={this.handleChange('firstName')}  />
+            <TextInput label="Last Name" handleChange={this.handleChange('lastName')}  />
+            <TextInput label="Email" handleChange={this.handleChange('email')}  />
+            <TextInput label="Password" handleChange={this.handleChange('password')} type="password"  />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"

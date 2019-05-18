@@ -2,12 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="30836b35-6b37-43e0-a662-aedeac1d6ddc" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/frontend.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/views/Signup.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Signup.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -45,8 +39,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/views/Signup.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="173">
-              <caret line="72" column="76" selection-start-line="72" selection-start-column="76" selection-end-line="72" selection-end-column="76" />
+            <state relative-caret-position="124">
+              <caret line="80" column="80" selection-start-line="80" selection-start-column="80" selection-end-line="80" selection-end-column="80" />
               <folding>
                 <element signature="e#0#26#0" expanded="true" />
               </folding>
@@ -165,12 +159,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1558161973931</updated>
-      <workItem from="1558161975992" duration="1042000" />
+      <workItem from="1558161975992" duration="1547000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1042000" />
+    <option name="totallyTimeSpent" value="1547000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="852" extended-state="6" />
@@ -226,8 +220,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/views/Signup.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="173">
-          <caret line="72" column="76" selection-start-line="72" selection-start-column="76" selection-end-line="72" selection-end-column="76" />
+        <state relative-caret-position="124">
+          <caret line="80" column="80" selection-start-line="80" selection-start-column="80" selection-end-line="80" selection-end-column="80" />
           <folding>
             <element signature="e#0#26#0" expanded="true" />
           </folding>
