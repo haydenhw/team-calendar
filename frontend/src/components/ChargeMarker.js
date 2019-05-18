@@ -1,17 +1,29 @@
 import React, { Component } from 'react';
-import ChargeMarkerImg from '../markers/charge-marker.png';
 
-const ChargeMarker = ({ text }) => <img src={ChargeMarkerImg}></img>;
+import chargeMarkerImg from '../markers/charge-marker.png';
+
+const styles = {
+        popup: {
+            position: "abosolute",
+            width: "100px",
+            height: "100px",
+            backgroundColor: "lightgrey",
+        }
+    };
 
 class Marker extends Component {
+
   render() {
-    const { location } = this.props;
-    console.log(location);
-    return (
-          <ChargeMarker 
-            lat={location.lat}
-            lng={location.lng}
-          />
+    const { handleClick, popupActive, id } = this.props;
+      return (
+        <div key={id} onClick={handleClick}>
+          {
+            popupActive
+                ? <div style={styles.popup}/>
+                : <div/>
+          }
+          <img src={chargeMarkerImg}/>;
+        </div>
     );
   }
 }

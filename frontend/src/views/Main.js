@@ -3,30 +3,30 @@ import axios from 'axios';
 import GoogleMapReact from 'google-map-react';
 import locations from '../config/locations';
 
-import HoverMarker from '../components/HoverMarker';
-import {K_CIRCLE_SIZE, K_STICK_SIZE} from '../components/HoverMarkerStyles';
+
+import ChargeMarker from '../components/ChargeMarker';
 import userMarkerImg from '../markers/user-marker.png';
 import chargeMarkerImg from '../markers/charge-marker.png';
 
 const styles = {
-        popup: {
-            position: "abosolute",
-            width: "100px",
-            height: "100px",
-            backgroundColor: "lightgrey",
-        }
-    }
+  popup: {
+    position: "abosolute",
+    width: "100px",
+    height: "100px",
+    backgroundColor: "lightgrey",
+  }
+}
 
-const ChargeMarker = ({ popupActive, handleClick }) => (
-  <div onClick={handleClick}>
-    {
-     popupActive 
-      ? <div style={styles.popup}/>
-      : <div/>
-    }
-    <img src={chargeMarkerImg}/>;
-  </div>
-);
+// const ChargeMarker = ({ popupActive, handleClick }) => (
+//   <div onClick={handleClick}>
+//     {
+//      popupActive
+//       ? <div style={styles.popup}/>
+//       : <div/>
+//     }
+//     <img src={chargeMarkerImg}/>;
+//   </div>
+// );
 
 const UserMarker = ({ text }) => <img src={userMarkerImg}></img>;
 
@@ -56,43 +56,47 @@ class SimpleMap extends Component {
     var chargeMarkers = locations.map((location, i) => {
 
       return (
-        <ChargeMarker popupActive={true} key={i} lat={location.coordinates.lat} lng={location.coordinates.lng} />
+        <ChargeMarker
+          key={location.coordinates.lat}
+          handleClick={this.togglePopup}
+          popupActive={this.state.open}
+          lat={location.coordinates.lat}
+          lng={location.coordinates.lng}
+        />
       );
-    });
+  });
 
     return chargeMarkers;
   }
 
-  togglePopup = () => {
-    const { open } = this.state;
+togglePopup = () => {
+  const { open } = this.state;
 
-    const logState = () => console.log(this.state);
+  const logState = () => console.log(this.state);
 
-    this.setState({ open: !open }, logState);
-  }
+  this.setState({ open: !open }, logState);
+};
 
-  render () {
-    return (
-      // Important! Always set the container height explicitly
+render() {
+  return (
+    // Important! Always set the container height explicitly
 
-      <div style={{ height: '100vh', width: '100%' }}>
-        <a href="http://www.google.com">Link to Today</a>
-        <GoogleMapReact
-          bootstrapURLKeys={{ key: 'AIzaSyAvPFEDTIhHF19n9qSU9XOLQoUOlwJrAbE' }}
-          defaultCenter={this.props.center}
-          defaultZoom={this.props.zoom}
-          hoverDistance={100 / 2}
+    <div style={{ height: '100vh', width: '100%' }}>
+      <a href="http://www.google.com">Link to Today</a>
+      <GoogleMapReact
+        bootstrapURLKeys={{ key: 'AIzaSyAvPFEDTIhHF19n9qSU9XOLQoUOlwJrAbE' }}
+        defaultCenter={this.props.center}
+        defaultZoom={this.props.zoom}
+        hoverDistance={100 / 2}
 
-        >
-          <ChargeMarker handleClick={this.togglePopup} popupActive={this.state.open} lat={hackathonLocation.lat} lng={hackathonLocation.lng} />
-
-          {/* <UserMarker lat={hackathonLocation.lat} lng={hackathonLocation.lng} /> */}
-          {/* <HoverMarker lat={hackathonLocation.lat} lng={hackathonLocation.lng} /> */}
-          {/* {this.renderChargeMarkers()} */}
-        </GoogleMapReact>
-      </div>
-    );
-  }
+      >
+        {/* <UserMarker lat={hackathonLocation.lat} lng={hackathonLocation.lng} /> */}
+        {/* <HoverMarker lat={hackathonLocation.lat} lng={hackathonLocation.lng} /> */}
+        {this.renderChargeMarkers()}
+      </GoogleMapReact>
+    </div>
+  );
+}
 }
 
 export default SimpleMap;
