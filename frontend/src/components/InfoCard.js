@@ -30,7 +30,8 @@ function InfoCard(props) {
 //   const bull = <span className={classes.bullet}>•</span>;
 
   return (
-    <Card className={props.locationName}>
+    // <Card className={props.locationName}>
+    <Card styles={styles.card}>
       <CardContent>
         {/* <Typography className={classes.title} color="textSecondary" gutterBottom>
           Word of the Day
