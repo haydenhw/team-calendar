@@ -1,4 +1,5 @@
 from flask import render_template, jsonify, request
+import googlemaps
 
 from app import app, db
 from app.models import User, Sink
@@ -13,8 +14,8 @@ def index():
     return render_template('index.html', users=return_data), 200
 
 
-def serialize_sink(sink):
-    return {
+def serialize_sink(sink, current_lat=None, current_lng=None):
+    sink_dict = {
         'id': sink.id,
         'locationName': sink.name,
         'coordinates': {
@@ -27,12 +28,32 @@ def serialize_sink(sink):
         'disabled': sink.disabled
     }
 
+    if current_lat and current_lng and app.config.get('GOOGLE_API_KEY'):
+        gmaps = googlemaps.Client(key=app.config['GOOGLE_API_KEY'])
+        directions = gmaps.directions(
+            f'{sink.lat},{sink.lng}',
+            f'{current_lat},{current_lng}',
+        )[0]
+        legs = directions.get('legs', [])
+        if legs:
+            distance = legs[0]['distance']['text']
+            sink_dict['distance_from_current'] = distance
+
+    return sink_dict
+
 
 @app.route('/rest/v1/sink', methods=['GET'])
 def sink_list():
     return_data = []
+
+    try:
+        current_lat = float(request.args.get('lat'))
+        current_lng = float(request.args.get('lng'))
+    except ValueError:
+        return jsonify({'success': False, 'message': 'Must provide valid floats for lat/lng'}), 400
+
     for sink_object in Sink.query.filter(Sink.disabled == False).all():
-        return_data.append(serialize_sink(sink_object))
+        return_data.append(serialize_sink(sink_object, current_lat, current_lng))
 
     return jsonify(return_data)
 
@@ -40,8 +61,15 @@ def sink_list():
 @app.route('/rest/v1/sink/<int:sink_id>', methods=['GET'])
 def sink_get(sink_id):
     sink = Sink.query.get(sink_id)
+
+    try:
+        current_lat = float(request.args.get('lat'))
+        current_lng = float(request.args.get('lng'))
+    except ValueError:
+        return jsonify({'success': False, 'message': 'Must provide valid floats for lat/lng'}), 400
+
     if sink:
-        return jsonify(serialize_sink(sink))
+        return jsonify(serialize_sink(sink, current_lat, current_lng))
     else:
         return jsonify({'success': False, 'message': f'Sink with id `{sink_id}` does not exist'}), 404
 
