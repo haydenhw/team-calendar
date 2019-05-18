@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Simple Map</title>
+    <meta name="viewport" content="initial-scale=1.0">
+    <meta charset="utf-8">
+    <style>
+        /* Always set the map height explicitly to define the size of the div
+         * element that contains the map. */
+        #map {
+            height: 100%;
+        }
+
+        /* Optional: Makes the sample page fill the window. */
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="map"></div>
+    <script>
+
+        const locations = [
+            {
+                locationName: "Bird",
+                bird: { lat: 37.811161, lng: -122.262722 },
+            },
+            {
+                locationName: "Lime",
+                coordinates: { lat: 37.809080, lng: -122.265588 },
+            },
+            {
+                locationName: "Scoot",
+                coordinates: { lat: 37.811894, lng: -122.269000 },
+            },
+            {
+                locationName: "Nisan",
+                coordinates: { lat: 37.810148, lng: -122.273045 },
+            },
+            {
+                locationName: "Nisan",
+                coordinates: { lat: 37.808029, lng: -122.272251 },
+            },
+            {
+                locationName: "Bird",
+                coordinates: { lat: 37.808555, lng: -122.269858 },
+            },
+            {
+                locationName: "Lime",
+                coordinates: { lat: 37.806716, lng: -122.268699 },
+            },
+            {
+                locationName: "Scoot",
+                coordinates: { lat: 37.805970, lng: -122.271875 },
+            },
+            {
+                locationName: "Nisan",
+                coordinates: { lat: 37.806521, lng: -122.265051 },
+            },
+            {
+                locationName: "Nisan",
+                coordinates: { lat: 37.804893, lng: -122.266853 },
+            }
+        ]
+        var map;
+        function initMap() {
+            var myLatLng = { lat: -25.363, lng: 131.044 };
+
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 4,
+                center: myLatLng
+            });
+
+            var marker = new google.maps.Marker({
+                position: myLatLng,
+                map: map,
+                title: 'Hello World!'
+            });
+        }
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAvPFEDTIhHF19n9qSU9XOLQoUOlwJrAbE&callback=initMap"
+        async defer></script>
+</body>
+
+</html>
