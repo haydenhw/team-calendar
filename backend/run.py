@@ -84,7 +84,7 @@ if __name__ == '__main__':
         os.remove('app.db')
     db.create_all()
 
-    default = User(email="solaruser@gmail.com")
+    default = User(email="solaruser@gmail.com", first_name="Solar", last_name="User")
     db.session.add(default)
 
     for location in SINK_LOCATIONS:

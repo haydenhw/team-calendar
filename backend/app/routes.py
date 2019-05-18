@@ -1,4 +1,4 @@
-from flask import render_template, jsonify
+from flask import render_template, jsonify, request
 
 from app import app
 from app.models import User, Sink
@@ -19,7 +19,7 @@ def index():
 
 
 @app.route('/rest/v1/sink', methods=['GET'])
-def sink():
+def sink_list():
     return_data = []
     for sink_object in Sink.query.filter(Sink.disabled==False).all():
         return_data.append({
@@ -34,3 +34,13 @@ def sink():
         })
 
     return jsonify(return_data)
+
+
+@app.route('/rest/v1/sink/<int:sink_id>', methods=['PATCH'])
+def sink_modify(sink_id):
+    Sink.query.get(id=sink_id)
+
+
+@app.route('/rest/v1/sink/<int:sink_id>', methods=['POST'])
+def sink_create():
+    return 'this works!', 200
