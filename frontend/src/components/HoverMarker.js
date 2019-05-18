@@ -35,7 +35,6 @@ export default class MyGreatPlaceWithStick extends Component {
             width: "100px",
             height: "100px",
             backgroundColor: "lightgrey",
-            // display: "block",
         }
     }
 
@@ -47,8 +46,9 @@ export default class MyGreatPlaceWithStick extends Component {
     const popupStyle = { ...isVisible, ...styles.popup };
 
     console.log(this.props.$hover);
+
     return (
-       <div style={style}>
+       <div style={style} onClick={console.log('hello')}>
           <div style={popupStyle}></div>
           <div>
               { <ChargeMarker /> }
