@@ -1,15 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+    />
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
     <meta charset="UTF-8" />
     <title>Your Events Today!</title>
   </head>
   <body>
-    {% for event in events %}
+    <p>{{ user.first_name }}'s Events</p>
+
+    <p>
+      {% for event in events %}
+    </p>
+
     <div>
-      <h2>
-        {{ event.name }}
-      </h2>
+      <div class="row">
+        <div class="col s12 m6">
+          <div class="card white">
+            <div class="card-content black-text">
+              <span class="card-title">{{ event.name }}</span>
+              <p>
+                {{ event.description }}
+              </p>
+              <div class="card-data">
+                Time: {{ event.start_time }} - {{ event.end_time }}
+              </div>
+            </div>
+            <div class="card-action">
+              <a href="#">This is a link</a>
+              <a href="#">This is a link</a>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
     {% endfor %}
   </body>

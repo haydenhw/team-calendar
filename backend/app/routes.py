@@ -16,8 +16,9 @@ def index():
 
 @app.route('/event/<int:user_id>')
 def get_user_events(user_id):
+    user = User.query.filter(User.id==user_id).first()
     events = Event.query.filter(Event.user_id==user_id).all()
-    return render_template('events.html', events=events)
+    return render_template('events.html', events=events, user=user)
 
 
 def serialize_sink(sink, current_lat=None, current_lng=None):

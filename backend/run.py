@@ -225,6 +225,7 @@ if __name__ == '__main__':
 
     event1 = Event(
       name="Work", 
+      description="Workey work!",
       start_time=convert_time_to_utc(2019, 5, 18, 9, 0), 
       end_time=convert_time_to_utc(2019, 5, 18, 16, 30), 
       user_id=default.id, 
@@ -234,6 +235,7 @@ if __name__ == '__main__':
 
     event2 = Event(
       name="Shopping", 
+      description="Super summer sales at the Shop Right Supermarket",
       start_time=convert_time_to_utc(2019, 5, 18, 17, 0), 
       end_time=convert_time_to_utc(2019, 5, 18, 18, 0), 
       user_id=default.id, 
@@ -243,6 +245,7 @@ if __name__ == '__main__':
 
     event3 = Event(
       name="Warriors Game", 
+      description="Watch the Golden State Warriors vs. the Portland Trail Blazers at the Conference Finals",
       start_time=convert_time_to_utc(2019, 5, 18, 18, 30), 
       end_time=convert_time_to_utc(2019, 5, 18, 21, 30), 
       user_id=default.id, 

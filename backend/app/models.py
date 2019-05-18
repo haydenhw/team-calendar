@@ -42,6 +42,7 @@ class Event(db.Model):
         nullable=False)
     user = db.relationship('User', backref='user')
     name = db.Column(db.String(2048), nullable=False)
+    description = db.Column(db.String(2048), nullable=False)
     start_time = db.Column(db.String(2048), nullable=False)
     end_time = db.Column(db.String(2048), nullable=False)
     lat = db.Column(db.Float, nullable=False, index=True)
