@@ -207,7 +207,7 @@ if __name__ == '__main__':
         os.remove('app.db')
     db.create_all()
 
-    default = User(email="solaruser@gmail.com", first_name="Solar", last_name="User")
+    default = User(email="solaruser@gmail.com", first_name="Joe Solar", last_name="Poweruser")
     db.session.add(default)
     db.session.commit()
 
