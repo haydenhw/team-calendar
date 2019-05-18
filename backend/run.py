@@ -104,14 +104,18 @@ if __name__ == '__main__':
         os.remove('app.db')
     db.create_all()
 
-    default = User(email="solaruser@gmail.com")
+    default = User(email="solaruser@gmail.com", first_name="Solar", last_name="User")
     db.session.add(default)
 
     for location in SINK_LOCATIONS:
         sink = Sink(
             name=location["locationName"],
             lat=location["coordinates"]["lat"],
-            long=location["coordinates"]["lng"],
+            lng=location["coordinates"]["lng"],
+            disabled=False,
+            price_per_hour=0,
+            slots=1,
+            max_slots=1,
         )
         db.session.add(sink)
 

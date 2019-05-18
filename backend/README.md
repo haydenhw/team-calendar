@@ -21,3 +21,4 @@ python run.py
 ```
 
 Then, go to localhost:8080 to get a dummy index page
+If you go to localhost:8080/rest/v1/sink you'll get the sink list
