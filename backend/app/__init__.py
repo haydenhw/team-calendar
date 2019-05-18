@@ -6,7 +6,7 @@ from config import Config
 
 app = Flask(__name__)
 app.config.from_object(Config)
-CORS(app, resources={r"*": {"origins": "*"}})
+CORS(app, resources={r"/rest/*": {"origins": "*"}})
 
 
 db = SQLAlchemy(app)
