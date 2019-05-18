@@ -12,13 +12,24 @@ const styles = {
     };
 
 class Marker extends Component {
+    state = {
+        open: false,
+    };
+
+    togglePopup = () => {
+        const { open } = this.state;
+
+        const logState = () => console.log(this.state);
+
+        this.setState({ open: !open });
+    };
 
   render() {
-    const { handleClick, popupActive, id } = this.props;
+    const { id } = this.props;
       return (
-        <div key={id} onClick={handleClick}>
+        <div key={id} onClick={this.togglePopup}>
           {
-            popupActive
+              this.state.open
                 ? <div style={styles.popup}/>
                 : <div/>
           }
