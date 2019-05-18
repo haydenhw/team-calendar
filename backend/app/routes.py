@@ -39,34 +39,59 @@ def sink_list():
 @app.route('/rest/v1/sink/<int:sink_id>', methods=['PATCH'])
 def sink_modify(sink_id):
     """ Queries database for Sink object with ID sink_id and changes the boolean in the disabled column
+        If increment and decrement parameters exist as true, increments and decrements the slots quantity accordingly
         Returns new modified object
     """
-
-    print(request.json)
-
-    # Get ID from post data from request
-
-    disabled_setting = request.json.get('disabled')
-    print(disabled_setting)
-    # # Find Sink in table with this ID
     modify_this_sink = Sink.query.filter(Sink.id==sink_id).first()
 
-    # # If sink with this ID exists..
-    # # get the disabled attribute
-    if modify_this_sink:
-        modify_this_sink.disabled = disabled_setting
-        db.session.add(modify_this_sink)
+    commit_to_db = False
 
-    else:
+    if not modify_this_sink:
         return jsonify({
             'success': False,
-            'message': "Could not find sink with ID " + str(sink_id)
+            'message': "Could not find sink with ID " + str(sink_id) + "."
         }), 404
 
-    db.session.commit()
+    if request.json.get('increment') == True: 
+        print("Increment is true!")
+        if modify_this_sink.slots < modify_this_sink.max_slots:
+            modify_this_sink.slots += 1
+            commit_to_db = True
+        else: 
+            message = "Slots already full."
+            return jsonify({
+                'success': False,
+                'message': message
+            }), 400
+
+    elif request.json.get('decrement') == True: 
+        print("Decrement is true!")
+        if modify_this_sink.slots > 0:
+            modify_this_sink.slots -= 1
+            commit_to_db = True
+        else: 
+            message = "Slots empty, cannot decrement."
+            return jsonify({
+                'success': False,
+                'message': message
+            }), 400
+
+    # Get disabled setting from post data from request
+    disabled_setting = request.json.get('disabled')
+
+    # Check to see if disabled parameter exists, if it does then change it to disabled_setting
+    if 'disabled' in request.json:
+        print("'Disabled' parameter exists!")
+        modify_this_sink.disabled = disabled_setting
+        commit_to_db = True
+
+    if commit_to_db:
+        db.session.add(modify_this_sink)
+        db.session.commit()
 
     return jsonify(serialize_sink(modify_this_sink))
 
+# patch with increment, decrement, disabled
 
 @app.route('/rest/v1/sink', methods=['POST'])
 def sink_create():
