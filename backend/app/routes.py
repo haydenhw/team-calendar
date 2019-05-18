@@ -1,7 +1,9 @@
 from flask import render_template, jsonify, request
+import googlemaps
 
 from app import app, db
 from app.models import User, Sink, Event
+
 
 @app.route('/')
 def index():
@@ -12,8 +14,8 @@ def index():
     return render_template('index.html', users=return_data), 200
 
 
-def serialize_sink(sink):
-    return {
+def serialize_sink(sink, current_lat=None, current_lng=None):
+    sink_dict = {
         'id': sink.id,
         'locationName': sink.name,
         'coordinates': {
@@ -26,6 +28,20 @@ def serialize_sink(sink):
         'disabled': sink.disabled
     }
 
+    if current_lat and current_lng and app.config.get('GOOGLE_API_KEY'):
+        gmaps = googlemaps.Client(key=app.config['GOOGLE_API_KEY'])
+        directions = gmaps.directions(
+            f'{sink.lat},{sink.lng}',
+            f'{current_lat},{current_lng}',
+        )[0]
+        legs = directions.get('legs', [])
+        if legs:
+            distance = legs[0]['distance']['text']
+            sink_dict['distance_from_current'] = distance
+
+    return sink_dict
+
+
 def serialize_event(event):
     return {
         'id': event.id,
@@ -36,6 +52,7 @@ def serialize_event(event):
         'lat': event.lat, 
         'lng': event.lng
     }
+
 
 @app.route('/rest/v1/events/<int:user_id>', methods=['GET'])
 # Queries all events that have a relationship with the specified user_id
@@ -51,8 +68,15 @@ def get_events_with_user_id(user_id):
 @app.route('/rest/v1/sink', methods=['GET'])
 def sink_list():
     return_data = []
-    for sink_object in Sink.query.filter(Sink.disabled==False).all():
-        return_data.append(serialize_sink(sink_object))
+
+    try:
+        current_lat = float(request.args.get('lat'))
+        current_lng = float(request.args.get('lng'))
+    except ValueError:
+        return jsonify({'success': False, 'message': 'Must provide valid floats for lat/lng'}), 400
+
+    for sink_object in Sink.query.filter(Sink.disabled == False).all():
+        return_data.append(serialize_sink(sink_object, current_lat, current_lng))
 
     return jsonify(return_data)
 
@@ -60,8 +84,15 @@ def sink_list():
 @app.route('/rest/v1/sink/<int:sink_id>', methods=['GET'])
 def sink_get(sink_id):
     sink = Sink.query.get(sink_id)
+
+    try:
+        current_lat = float(request.args.get('lat'))
+        current_lng = float(request.args.get('lng'))
+    except ValueError:
+        return jsonify({'success': False, 'message': 'Must provide valid floats for lat/lng'}), 400
+
     if sink:
-        return jsonify(serialize_sink(sink))
+        return jsonify(serialize_sink(sink, current_lat, current_lng))
     else:
         return jsonify({'success': False, 'message': f'Sink with id `{sink_id}` does not exist'}), 404
 
@@ -72,8 +103,7 @@ def sink_modify(sink_id):
         If increment and decrement parameters exist as true, increments and decrements the slots quantity accordingly
         Returns new modified object
     """
-    modify_this_sink = Sink.query.filter(Sink.id==sink_id).first()
-
+    modify_this_sink = Sink.query.filter(Sink.id == sink_id).first()
     commit_to_db = False
 
     if not modify_this_sink:
@@ -90,29 +120,24 @@ def sink_modify(sink_id):
             'message': "Cannot increment and decrement at the same time"
         }), 400
 
-    if 'increment' in request.json: 
-        print("Increment is true!")
-        
+    if 'increment' in request.json:
         if modify_this_sink.slots < modify_this_sink.max_slots:
             modify_this_sink.slots += 1
             commit_to_db = True
-        
-        else: 
+        else:
             message = "Slots already full."
             return jsonify({
                 'success': False,
                 'message': message
             }), 400
 
-    elif 'decrement' in request.json: 
+    elif 'decrement' in request.json:
 
-        print("Decrement is true!")
-        
         if modify_this_sink.slots > 0:
             modify_this_sink.slots -= 1
             commit_to_db = True
-        
-        else: 
+
+        else:
             message = "Slots empty, cannot decrement."
             return jsonify({
                 'success': False,
@@ -124,7 +149,6 @@ def sink_modify(sink_id):
 
     # Check to see if disabled parameter exists, if it does then change it to disabled_setting
     if 'disabled' in request.json:
-        print("'Disabled' parameter exists!")
         modify_this_sink.disabled = disabled_setting
         commit_to_db = True
 
@@ -134,7 +158,6 @@ def sink_modify(sink_id):
 
     return jsonify(serialize_sink(modify_this_sink))
 
-# patch with increment, decrement, disabled
 
 @app.route('/rest/v1/sink', methods=['POST'])
 def sink_create():

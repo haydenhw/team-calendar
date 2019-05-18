@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Simple Map</title>
+    <meta name="viewport" content="initial-scale=1.0">
+    <meta charset="utf-8">
+    <style>
+        /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+        #map {
+            height: 100%;
+        }
+
+        /* Optional: Makes the sample page fill the window. */
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="map"></div>
+    <script>
+        const locations = [
+            {
+                locationName: "Bird",
+                coordinates: { lat: 37.811161, lng: -122.262722 },
+            },
+            {
+                locationName: "Lime",
+                coordinates: { lat: 37.809080, lng: -122.265588 },
+            },
+            {
+                locationName: "Scoot",
+                coordinates: { lat: 37.811894, lng: -122.269000 },
+            },
+            {
+                locationName: "Nisan",
+                coordinates: { lat: 37.810148, lng: -122.273045 },
+            },
+            {
+                locationName: "Nisan",
+                coordinates: { lat: 37.808029, lng: -122.272251 },
+            },
+            {
+                locationName: "Bird",
+                coordinates: { lat: 37.808555, lng: -122.269858 },
+            },
+            {
+                locationName: "Lime",
+                coordinates: { lat: 37.806716, lng: -122.268699 },
+            },
+            {
+                locationName: "Scoot",
+                coordinates: { lat: 37.805970, lng: -122.271875 },
+            },
+            {
+                locationName: "Nisan",
+                coordinates: { lat: 37.806521, lng: -122.265051 },
+            },
+            {
+                locationName: "Nisan",
+                coordinates: { lat: 37.804893, lng: -122.266853 },
+            }
+        ]
+        var contentString = '<div id="content">' +
+            '<div id="siteNotice">' +
+            '</div>' +
+            '<h1 id="firstHeading" class="firstHeading">Uluru</h1>' +
+            '<div id="bodyContent">' +
+            '<p><b>Uluru</b>, also referred to as <b>Ayers Rock</b>, is a large ' +
+            'sandstone rock formation in the southern part of the ' +
+            'Northern Territory, central Australia. It lies 335&#160;km (208&#160;mi) ' +
+            'south west of the nearest large town, Alice Springs; 450&#160;km ' +
+            '(280&#160;mi) by road. Kata Tjuta and Uluru are the two major ' +
+            'features of the Uluru - Kata Tjuta National Park. Uluru is ' +
+            'sacred to the Pitjantjatjara and Yankunytjatjara, the ' +
+            'Aboriginal people of the area. It has many springs, waterholes, ' +
+            'rock caves and ancient paintings. Uluru is listed as a World ' +
+            'Heritage Site.</p>' +
+            '<p>Attribution: Uluru, <a href="https://en.wikipedia.org/w/index.php?title=Uluru&oldid=297882194">' +
+            'https://en.wikipedia.org/w/index.php?title=Uluru</a> ' +
+            '(last visited June 22, 2009).</p>' +
+            '</div>' +
+            '</div>';
+
+        var map;
+
+        function initMap() {
+            var myLatLng = locations[0].coordinates;
+
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 16,
+                center: myLatLng
+            });
+
+            var infowindow = new google.maps.InfoWindow({
+                content: contentString
+            });
+
+            var marker = new google.maps.Marker({
+                position: myLatLng,
+                map: map,
+                title: 'Hello World!'
+            });
+
+            marker.addListener('click', function () {
+                infowindow.open(map, marker);
+            });
+
+
+            var image = './markers/user-marker-lg.png';
+
+            var marker2 = new google.maps.Marker({
+                position: locations[1].coordinates,
+                map: map,
+                title: 'Hello World!',
+                icon: image
+            });
+        }
+
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAvPFEDTIhHF19n9qSU9XOLQoUOlwJrAbE&callback=initMap"
+        async defer></script>
+</body>
+
+</html>

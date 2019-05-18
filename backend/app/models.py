@@ -1,5 +1,5 @@
 from app import db
-# from datetime import datetime
+
 
 class User(db.Model):
 
@@ -30,6 +30,7 @@ class Sink(db.Model):
 
     def __repr__(self):
         return f'<Sink name {self.name} has {self.slots} slots>'
+
 
 class Event(db.Model):
 
