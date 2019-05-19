@@ -16,15 +16,20 @@
     
       }
       .wrapper {
-       /* margin-left: 10%; */
+        width: 570px;
+        margin: 0 auto;
+        text-align: center;
       }
-
+      .row .col.m6 {
+        width: 100% !important;
+        
+      }
     </style>
   </head>
   <body>
     <div class="wrapper">
     <img src="/static/logo.png" />
-    <h3>{{ user.first_name }}'s Events</h3>
+    <h4 style="display: block">{{ user.first_name }}'s Events</h4>
     <p>
       {% for event in events %}
     </p>
