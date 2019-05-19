@@ -11,8 +11,18 @@
 
     <meta charset="UTF-8" />
     <title>Your Events Today!</title>
+    <style>
+      body {
+    
+      }
+      .wrapper {
+       /* margin-left: 10%; */
+      }
+
+    </style>
   </head>
   <body>
+    <div class="wrapper">
     <img src="/static/logo.png" />
     <h3>{{ user.first_name }}'s Events</h3>
     <p>
@@ -49,8 +59,10 @@
           </div>
         </div>
       </div>
-    </div>
+   
 
     {% endfor %}
+  </div>
+</div>
   </body>
 </html>
