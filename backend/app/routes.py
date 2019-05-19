@@ -67,12 +67,12 @@ def serialize_event(event):
         'name': event.name,
         'start_time': event.start_time,
         'end_time': event.end_time,
-        'lat': event.lat, 
+        'lat': event.lat,
         'lng': event.lng
     }
 
 
-@app.route('/rest/v1/events/<int:user_id>', methods=['GET'])
+@app.route('/rest/v1/event/<int:user_id>', methods=['GET'])
 # Queries all events that have a relationship with the specified user_id
 def get_events_with_user_id(user_id):
     user_events = []
@@ -81,6 +81,32 @@ def get_events_with_user_id(user_id):
         user_events.append(serialize_event(user_event))
 
     return jsonify(user_events)
+
+
+@app.route('/rest/v1/event', methods=['POST'])
+def event_create():
+    try:
+        new_event = Event(
+            user_id=request.json['userId'],
+            name=request.json['name'],
+            description=request.json['description'],
+            start_time=request.json['start_time'],
+            end_time=request.json['end_time'],
+            lat=request.json['lat'],
+            lng=request.json['lng'],
+        )
+    except KeyError as e:
+        missing_key = e.args[0]
+        message = f'Key `{missing_key}` not in request'
+        return jsonify({
+            'success': False,
+            'message': message
+        }), 400
+
+    db.session.add(new_event)
+    db.session.commit()
+
+    return jsonify(serialize_sink(new_event)), 200
 
 
 @app.route('/rest/v1/sink', methods=['GET'])
